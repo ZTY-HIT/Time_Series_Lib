@@ -1,0 +1,83 @@
+# 实验配置
+experiment:
+  random_seed: 42
+  test_size: 0.2
+  val_size: 0.1
+  
+# 数据集配置  
+datasets:
+  available:
+    - "electricity"
+    - "ETTh1" 
+    - "ETTh2"
+    - "ETTm1"
+    - "ETTm2"
+    - "exchange_rate"
+    - "national_illness"
+    - "traffic"
+    - "weather"
+  default: "electricity"
+
+# 缺失模式配置
+missing_patterns:
+  available:
+    - "MCAR"
+    - "MAR_STRUCT" 
+    - "MNAR_BIAS"
+    - "BLACKOUT"
+  default: "MCAR"
+
+# 缺失率配置  
+missing_rates:
+  available:
+    - 0.1
+    - 0.25
+    - 0.5
+  default: 0.1
+
+# 填补方法配置
+imputers:
+  available:
+    - "mean"
+    - "knn" 
+    - "miss_forest"
+    # - "trmf"
+    - "xgboost"
+    - "ilm"
+    # - "front"
+  baseline: "mean"  # 新增：指定 baseline 方法
+  pattern_mapping:  # 模式感知的映射规则
+    MCAR: "mean"
+    MAR_STRUCT: "knn" 
+    MNAR_BIAS: "xgboost"
+    BLACKOUT: "knn"
+  default: "mean"
+
+# 预测模型配置
+forecast_models:
+  available:
+    - "arima"
+    - "auto_arima"
+    - "auto_sarima" 
+    - "sarima"
+  default: "arima"
+
+# 评估指标配置
+metrics:
+  imputation:
+    - "RMSE"
+    - "MAE" 
+    - "R2"
+  forecasting:
+    - "RMSE"
+    - "MAE"
+    - "MAPE"
+
+# 路径配置
+paths:
+  root: "."
+  data_raw: "dataset/raw"
+  data_missing: "dataset/data_with_missing" 
+  outputs_impute: "impute_outputs"
+  outputs_forecast: "forecast_outputs"
+  results: "results"
